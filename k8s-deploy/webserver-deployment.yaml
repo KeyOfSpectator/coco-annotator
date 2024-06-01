@@ -37,14 +37,16 @@ spec:
               protocol: TCP
           volumeMounts:
             - mountPath: /datasets
-              name: webserver-cm0
+              name: datasets
             - mountPath: /models
-              name: webserver-cm1
+              name: models
       restartPolicy: Always
       volumes:
-        - configMap:
-            name: webserver-cm0
-          name: webserver-cm0
-        - configMap:
-            name: webserver-cm1
-          name: webserver-cm1
+        - name: datasets
+          hostPath:
+            path: /datasets
+            type: DirectoryOrCreate
+        - name: models
+          hostPath:
+            path: /models
+            type: DirectoryOrCreate

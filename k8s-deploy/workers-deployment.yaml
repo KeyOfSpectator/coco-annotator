@@ -28,9 +28,10 @@ spec:
           name: annotator-workers
           volumeMounts:
             - mountPath: /datasets
-              name: workers-cm0
+              name: datasets
       restartPolicy: Always
       volumes:
-        - configMap:
-            name: workers-cm0
-          name: workers-cm0
+        - name: datasets
+          hostPath:
+            path: /datasets
+            type: DirectoryOrCreate
