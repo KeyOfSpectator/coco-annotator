@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yml
+    kompose.version: 1.33.0 (3ce457399)
+  labels:
+    io.kompose.service: webserver
+  name: webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: webserver
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ../docker-compose.yml
+        kompose.version: 1.33.0 (3ce457399)
+      labels:
+        io.kompose.network/coco-annotator-cocoannotator: "true"
+        io.kompose.service: webserver
+    spec:
+      containers:
+        - env:
+            - name: FILE_WATCHER
+              value: "true"
+            - name: SECRET_KEY
+              value: RandomSecretKeyHere
+          image: jsbroks/coco-annotator:webserver-stable
+          name: annotator-webclient
+          ports:
+            - containerPort: 5000
+              hostPort: 5000
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /datasets
+              name: webserver-cm0
+            - mountPath: /models
+              name: webserver-cm1
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: webserver-cm0
+          name: webserver-cm0
+        - configMap:
+            name: webserver-cm1
+          name: webserver-cm1

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yml
+    kompose.version: 1.33.0 (3ce457399)
+  labels:
+    io.kompose.service: messageq
+  name: messageq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: messageq
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ../docker-compose.yml
+        kompose.version: 1.33.0 (3ce457399)
+      labels:
+        io.kompose.network/coco-annotator-cocoannotator: "true"
+        io.kompose.service: messageq
+    spec:
+      containers:
+        - env:
+            - name: RABBITMQ_DEFAULT_PASS
+              value: password
+            - name: RABBITMQ_DEFAULT_USER
+              value: user
+          image: rabbitmq:3
+          name: annotator-message-q
+      restartPolicy: Always

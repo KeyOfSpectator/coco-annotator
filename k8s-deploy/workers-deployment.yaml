@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yml
+    kompose.version: 1.33.0 (3ce457399)
+  labels:
+    io.kompose.service: workers
+  name: workers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: workers
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ../docker-compose.yml
+        kompose.version: 1.33.0 (3ce457399)
+      labels:
+        io.kompose.network/coco-annotator-cocoannotator: "true"
+        io.kompose.service: workers
+    spec:
+      containers:
+        - image: jsbroks/coco-annotator:workers-stable
+          name: annotator-workers
+          volumeMounts:
+            - mountPath: /datasets
+              name: workers-cm0
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: workers-cm0
+          name: workers-cm0
