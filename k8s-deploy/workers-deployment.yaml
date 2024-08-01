@@ -24,7 +24,7 @@ spec:
         io.kompose.service: workers
     spec:
       containers:
-        - image: keyofspectator/default:coco-annotator-workers-stable-20240801
+        - image: registry.cn-beijing.aliyuncs.com/keyofspectator/fsc-self-bj:coco-annotator-workers-stable-20240801
           name: annotator-workers
           volumeMounts:
             - mountPath: /datasets
