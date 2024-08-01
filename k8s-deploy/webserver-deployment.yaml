@@ -29,7 +29,7 @@ spec:
               value: "true"
             - name: SECRET_KEY
               value: RandomSecretKeyHere
-          image: keyofspectator/default:coco-annotator-webserver-stable-20240801
+          image: registry.cn-beijing.aliyuncs.com/keyofspectator/fsc-self-bj:coco-annotator-webserver-stable-20240801
           name: annotator-webclient
           ports:
             - containerPort: 5000
