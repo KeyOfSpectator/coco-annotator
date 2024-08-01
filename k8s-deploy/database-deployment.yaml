@@ -33,7 +33,7 @@ spec:
               value: /data/db
             - name: MONGO_LOG_DIR
               value: /dev/null
-          image: mongo:4.0
+          image: keyofspectator/default:mongo-4-0-20240801
           name: annotator-mongodb
           volumeMounts:
             - mountPath: /data/db
