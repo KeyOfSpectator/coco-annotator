@@ -27,6 +27,6 @@ spec:
               value: password
             - name: RABBITMQ_DEFAULT_USER
               value: user
-          image: rabbitmq:3
+          image: keyofspectator/default:rabbitmq-3-20240801
           name: annotator-message-q
       restartPolicy: Always
